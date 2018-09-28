@@ -11,6 +11,14 @@ f = lambda x: np.sqrt(1-x**2)
 #積分（真）
 quad, quad_err = integrate.quad(f, a, b)
 
+#積分（台形則）
+
+n=1000  #分点の数
+x=np.linspace(a, b, n, endpoint=True)
+F=(np.delete(f(x),0)+np.delete(f(x),n-1))*(b-a)/(2*(n-1))
+S=np.sum(F)
+
+
 # 積分(ガウスルジャンドル)
 n = 100     #n個の分点
 x, w = np.polynomial.legendre.leggauss(n)     #x:分点、w:重み
@@ -24,4 +32,4 @@ dDE=(b-a)/2*f((b-a)/2*np.tanh(g)+(a+b)/2)*np.cosh(m*h)/(np.cosh(g))**2 #2001個�
 DE=np.pi*h/2*np.sum(dDE)
 
 #積分値出力
-print("真:{0}(推定誤差:{1})\nガウスルジャンドル:{2}\n二重指数型積分:{3}".format(quad,quad_err, gauss,DE))
+print("真:{0}(推定誤差:{1})\n台形則:{2}\nガウスルジャンドル:{3}\n二重指数型積分:{4}".format(quad,quad_err,S, gauss,DE))
